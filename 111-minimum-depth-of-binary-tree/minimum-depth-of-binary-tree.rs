@@ -19,27 +19,40 @@
 
 use std::rc::Rc;
 use std::cell::RefCell;
+use std::collections::VecDeque;
 
 impl Solution {
     pub fn min_depth(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
-        let Some(node) = root else {
-            return 0;
+        let Some(root) = root else {
+            return 0
         };
-        let left = node.borrow_mut().left.take();
-        let right = node.borrow_mut().right.take();
-        let left = Self::min_depth(left);
-        let right = Self::min_depth(right);
 
-        if left == 0 && right == 0 {
-            return 1;
+        let mut queue = VecDeque::new();
+        queue.push_back(root);
+        let mut depth = 1;
+
+        while !queue.is_empty() {
+            let level_size = queue.len();
+
+            for _ in 0..level_size {
+                let node_rc = queue.pop_front().unwrap();
+                let node = node_rc.borrow();
+
+                if node.left.is_none() && node.right.is_none() {
+                    return depth;
+                }
+
+                if let Some(left) = &node.left {
+                    queue.push_back(left.clone());
+                }
+                if let Some(right) = &node.right {
+                    queue.push_back(right.clone());
+                }
+            }
+            
+            depth += 1;
         }
 
-        let length = if left == 0 || right == 0 {
-            left + right
-        } else {
-            left.min(right)
-        };
-
-        length + 1
+        depth
     }
 }
