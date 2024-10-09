@@ -30,10 +30,14 @@ impl Solution {
         let left = Self::min_depth(left);
         let right = Self::min_depth(right);
 
+        if left == 0 && right == 0 {
+            return 1;
+        }
+
         if left == 0 && right > 0 {
-                right + 1 
+            right + 1 
         } else if left > 0 && right == 0 {
-                left + 1
+            left + 1
         } else {
             left.min(right) + 1
         }
