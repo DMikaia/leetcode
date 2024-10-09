@@ -25,15 +25,17 @@ impl Solution {
         let Some(node) = root else {
             return 0;
         };
-        let left_value = Self::min_depth(node.borrow().left.clone());
-        let right_value = Self::min_depth(node.borrow().right.clone());
+        let left = node.borrow_mut().left.take();
+        let right = node.borrow_mut().right.take();
+        let left = Self::min_depth(left);
+        let right = Self::min_depth(right);
 
-        if left_value == 0 && right_value > 0 {
-                right_value + 1 
-        } else if left_value > 0 && right_value == 0 {
-                left_value + 1
+        if left == 0 && right > 0 {
+                right + 1 
+        } else if left > 0 && right == 0 {
+                left + 1
         } else {
-            left_value.min(right_value) + 1
+            left.min(right) + 1
         }
     }
 }
