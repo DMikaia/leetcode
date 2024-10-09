@@ -21,16 +21,13 @@ use std::cell::RefCell;
 impl Solution {
     pub fn max_depth(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
         if let Some(node) = root {
-            let mut curr_node = node.borrow_mut();
-            let mut max = 1; 
+            let left_max = Self::max_depth(node.borrow().left.clone()) + 1;
+            let right_max = Self::max_depth(node.borrow().right.clone()) + 1;
 
-            let left_max = Self::max_depth(curr_node.left.take());
-            let right_max = Self::max_depth(curr_node.right.take());
-
-            if left_max + 1 > right_max + 1 {
-                left_max + 1
+            if left_max > right_max {
+                left_max
             } else {
-                right_max + 1
+                right_max
             }
         } else {
             0
