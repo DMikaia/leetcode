@@ -23,19 +23,18 @@ use std::cmp;
 
 impl Solution {
     pub fn min_depth(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
-        if let Some(node) = root {
-            let left_node = Self::min_depth(node.borrow().left.clone());
-            let right_node = Self::min_depth(node.borrow().right.clone());
+        let Some(node) = root else {
+            return 0;
+        };
+        let left_node = Self::min_depth(node.borrow().left.clone());
+        let right_node = Self::min_depth(node.borrow().right.clone());
 
-            if left_node == 0 && right_node > 0 {
+        if left_node == 0 && right_node > 0 {
                 right_node + 1 
-            } else if left_node > 0 && right_node == 0 {
+        } else if left_node > 0 && right_node == 0 {
                 left_node + 1
-            } else {
-                cmp::min(left_node, right_node) + 1
-            }
         } else {
-            0
+            cmp::min(left_node, right_node) + 1
         }
     }
 }
