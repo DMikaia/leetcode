@@ -23,13 +23,10 @@ impl Solution {
         if let Some(node) = root {
             let left_node = node.borrow().left.clone();
             let right_node = node.borrow().right.clone();
-             
-            let left_counter = Self::count_nodes(left_node); 
-            let right_counter = Self::count_nodes(right_node); 
 
-            return 1 + left_counter + right_counter;
+            1 + Self::count_nodes(left_node) + Self::count_nodes(right_node)
+        } else {
+            0
         }
-
-        0
     }
 }
