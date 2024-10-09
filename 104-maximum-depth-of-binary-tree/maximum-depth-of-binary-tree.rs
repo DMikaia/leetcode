@@ -18,17 +18,15 @@
 // }
 use std::rc::Rc;
 use std::cell::RefCell;
+use std::cmp;
+
 impl Solution {
     pub fn max_depth(root: Option<Rc<RefCell<TreeNode>>>) -> i32 {
         if let Some(node) = root {
-            let left_max = Self::max_depth(node.borrow().left.clone()) + 1;
-            let right_max = Self::max_depth(node.borrow().right.clone()) + 1;
-
-            if left_max > right_max {
-                left_max
-            } else {
-                right_max
-            }
+            cmp::max(
+                Self::max_depth(node.borrow().left.clone()) + 1, 
+                Self::max_depth(node.borrow().right.clone()) + 1
+            )
         } else {
             0
         }
