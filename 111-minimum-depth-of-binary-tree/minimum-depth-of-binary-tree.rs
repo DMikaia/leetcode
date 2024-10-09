@@ -34,12 +34,12 @@ impl Solution {
             return 1;
         }
 
-        if left == 0 && right > 0 {
-            right + 1 
-        } else if left > 0 && right == 0 {
-            left + 1
+        let length = if left == 0 || right == 0 {
+            left + right
         } else {
-            left.min(right) + 1
-        }
+            left.min(right)
+        };
+
+        length + 1
     }
 }
