@@ -1,5 +1,3 @@
-use std::str::from_utf8;
-
 impl Solution {
     pub fn divisor_substrings(num: i32, k: i32) -> i32 {
         let str = num.to_string();
