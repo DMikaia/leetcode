@@ -10,26 +10,23 @@ impl Solution {
         if k > 0 {
             let k = k as usize;
 
-            let mut sum = code.iter().take(k).sum::<i32>();
+            let mut sum = code[1..=k].iter().sum::<i32>();
 
-            for i in 0..len {
-                sum -= code[i];
-                sum += code[(i + k) % len];
-                result[i] = sum;
+            for i in 1..len + 1 {
+                result[i - 1] = sum;
+                
+                sum -= code[i % len];
+                sum += code[(len + i + k) % len];
             }
         } else {
             let k = -k as usize; 
-            let mut sum = 0;
+            let mut sum = code[len - k..].iter().sum();
 
-            for i in 1..=k {
-                sum += code[len - 1 - i];
-            }
+            for i in 1..len + 1 {
+                result[i - 1] = sum;
 
-            for i in 0..len {
                 sum -= code[(len - 1 + i - k) % len];
-                sum += code[(len - 1  + i)  % len];
-
-                result[i] = sum;
+                sum += code[(i - 1)  % len];
             }
         }
 
