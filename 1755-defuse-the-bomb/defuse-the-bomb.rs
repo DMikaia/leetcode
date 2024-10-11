@@ -4,39 +4,35 @@ impl Solution {
         let mut result: Vec<i32> = vec![0; len];
 
         if k == 0 {
-            result
-        } else if k > 0 {
-            let k = k as usize;
-            let mut sum = 0;
+            return result;
+        }
 
-            for i in 0..k {
-                sum += code[i];
-            }
+        if k > 0 {
+            let k = k as usize;
+
+            let mut sum = code.iter().take(k).sum::<i32>();
 
             for i in 0..len {
                 sum -= code[i];
                 sum += code[(i + k) % len];
-
                 result[i] = sum;
             }
-
-            result
         } else {
-            let k = -k as usize;
+            let k = -k as usize; 
             let mut sum = 0;
 
-            for i in 1..k+1 {
+            for i in 1..=k {
                 sum += code[len - 1 - i];
             }
 
             for i in 0..len {
                 sum -= code[(len - 1 + i - k) % len];
-                sum += code[(len - 1 + i)  % len];
+                sum += code[(len - 1  + i)  % len];
 
                 result[i] = sum;
             }
-
-            result
         }
+
+        result
     }
 }
