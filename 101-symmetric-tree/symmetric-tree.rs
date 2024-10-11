@@ -20,28 +20,29 @@ use std::rc::Rc;
 use std::cell::RefCell;
 impl Solution {
     pub fn is_symmetric(root: Option<Rc<RefCell<TreeNode>>>) -> bool {
-        if let Some(node) = root {
-            return Self::is_nodes_symetric(node.borrow().left.clone(),node.borrow().right.clone());
+        match root {
+            Some(root) => {
+                let mut root = root.borrow_mut();
+                
+                Self::check_nodes(root.left.take(), root.right.take())
+            }
+            None => false
         }
-
-        false
     }
 
-    pub fn is_nodes_symetric(left: Option<Rc<RefCell<TreeNode>>>, right: Option<Rc<RefCell<TreeNode>>>) -> bool {
+    pub fn check_nodes(left: Option<Rc<RefCell<TreeNode>>>, right: Option<Rc<RefCell<TreeNode>>>) -> bool {
         match (left, right) {
             (None, None) => true,
             (Some(left), Some(right)) => {
-                let left = left.borrow();
-                let right = right.borrow();
+                let mut left = left.borrow_mut();
+                let mut right = right.borrow_mut();
 
                 if left.val != right.val {
                     return false;
                 }
 
-                let next_left = Self::is_nodes_symetric(left.left.clone(), right.right.clone());
-                let next_right = Self::is_nodes_symetric(left.right.clone(), right.left.clone());
-
-                next_left && next_right
+                return Self::check_nodes(left.left.take(), right.right.take()) &&
+                Self::check_nodes(left.right.clone(), right.left.take());
             },
             (_) => false
         }
