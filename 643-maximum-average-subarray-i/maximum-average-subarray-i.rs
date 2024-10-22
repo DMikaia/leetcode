@@ -1,8 +1,8 @@
-use std::cmp;
+use std::f64::MIN;
 
 impl Solution {
     pub fn find_max_average(nums: Vec<i32>, k: i32) -> f64 {
-        let mut avg: f64 = std::f64::MIN;
+        let mut avg: f64 = MIN;
         let mut sum = 0;
         let mut start = 0;
 
