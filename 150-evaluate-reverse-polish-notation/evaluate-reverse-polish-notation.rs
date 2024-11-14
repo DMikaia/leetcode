@@ -11,24 +11,16 @@ impl Solution {
                 let n_1: i32 = stack.pop().unwrap();
                 let n_2: i32 = stack.pop().unwrap();
 
-                match token.as_str() {
-                    "+" => {
-                        stack.push(n_2 + n_1)
-                    }
-                    "-" => {
-                        stack.push(n_2 - n_1);
-                    }
-                    "*" => {
-                        stack.push(n_2 * n_1);
-                    }
-                    "/" => {
-                        stack.push(n_2 / n_1);
-                    }
-                    _ => {}
-                }
+                let result = match token.as_str() {
+                    "+" => n_2 + n_1,
+                    "-" => n_2 - n_1,
+                    "*" => n_2 * n_1,
+                    _ => n_2 / n_1,
+                };
+
+                stack.push(result);
             } else {
-                let num: i32 = token.parse().unwrap();
-                stack.push(num);
+                stack.push(token.parse::<i32>().unwrap());
             }
 
         }
