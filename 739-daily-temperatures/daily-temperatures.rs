@@ -1,16 +1,28 @@
 impl Solution {
     pub fn daily_temperatures(temperatures: Vec<i32>) -> Vec<i32> {
-        let mut result = vec![0; temperatures.len()];
-        let mut stack: Vec<(i32, i32)> = Vec::new();
+        let n = temperatures.len();
 
-        for (i, &current_temp) in temperatures.iter().enumerate() {
-            while !stack.is_empty() && current_temp > stack[stack.len() - 1].0 {
-                let pair = stack.pop().unwrap();
+        if n == 1 {
+            return vec![0];
+        }
 
-                result[pair.1 as usize] = i as i32 - pair.1;
+        let mut result: Vec<i32> = vec![0; n]; 
+
+        for i in (0..=n - 2).rev() {
+            let mut pointer = i + 1;
+            let mut counter = 1;
+
+            while temperatures[i] >= temperatures[pointer] {
+                if pointer == n - 1 || result[pointer] == 0 {
+                    counter = 0;
+                    break;
+                }
+
+                counter += result[pointer];
+                pointer += result[pointer] as usize;
             }
 
-            stack.push((current_temp, i as i32));
+            result[i] = counter;
         }
 
         result
