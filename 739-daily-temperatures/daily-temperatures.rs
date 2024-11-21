@@ -1,11 +1,6 @@
 impl Solution {
     pub fn daily_temperatures(temperatures: Vec<i32>) -> Vec<i32> {
         let n = temperatures.len();
-
-        if n == 1 {
-            return vec![0];
-        }
-
         let mut result: Vec<i32> = vec![0; n]; 
 
         for i in (0..=n - 2).rev() {
