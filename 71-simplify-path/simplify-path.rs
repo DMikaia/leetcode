@@ -1,32 +1,33 @@
 impl Solution {
     pub fn simplify_path(path: String) -> String {
-        let elements = path.split('/');
-        let mut stack: Vec<&str> = vec![];
+        let mut stack: Vec<&str> = Vec::new();
 
-        for e in elements {
-            match e {
+        for part in path.trim_start_matches('/').split('/') {
+            match part {
                 ".." => {
-                    if !stack.is_empty() { 
-                        stack.pop(); 
-                    } 
-                },
-                "" => {},
-                "." => {},
+                    if !stack.is_empty() {
+                        stack.pop();
+                    }
+                }
+                "." | "" => {}
                 _ => {
-                    stack.push(e);
+                    stack.push(part);
                 }
             }
         }
 
-        let mut result = String::new();
-        result.push('/');
-        for (i, e) in stack.iter().enumerate() {
-            if (i > 0) {
-                result.push('/');
-            }
-            result.push_str(e)
+        if stack.is_empty() {
+            return "/".to_string(); 
         }
 
-        result
+        let mut result = String::new();
+        for (i, part) in stack.iter().enumerate() {
+            if i > 0 {
+                result.push('/');
+            }
+            result.push_str(part);
+        }
+
+        format!("/{}", result)
     }
 }
