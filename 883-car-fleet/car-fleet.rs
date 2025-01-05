@@ -10,7 +10,6 @@ impl Solution {
         let mut stack: Vec<f32> = Vec::new();
 
         for p in pair {
-            println!("({}, {})", p.0, p.1);
             stack.push((target - p.0) as f32 / p.1 as f32);
             if stack.len() >= 2 && stack.last() <= stack.get(stack.len() - 2) {
                 stack.pop();
