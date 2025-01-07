@@ -25,7 +25,7 @@ impl MinStack {
     
     fn push(&mut self, val: i32) {
         self.stack.push(Element { val, min: self.min });
-        self.min = self.min.min(val);
+        self.min = val.min(self.min);
     }
     
     fn pop(&mut self) {
