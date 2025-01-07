@@ -1,5 +1,3 @@
-use std::cmp;
-
 struct MinStack {
     stack: Vec<Element>,
     min: i32,
@@ -29,8 +27,9 @@ impl MinStack {
     }
     
     fn pop(&mut self) {
-        let val = self.stack.pop().unwrap();
-        self.min = val.min;
+        if let Some(val) = self.stack.pop() {
+            self.min = val.min;
+        } 
     }
     
     fn top(&self) -> i32 {
