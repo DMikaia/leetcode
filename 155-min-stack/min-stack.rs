@@ -1,3 +1,5 @@
+use std::cmp;
+
 struct MinStack {
     stack: Vec<Element>,
     min: i32,
