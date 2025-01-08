@@ -10,17 +10,19 @@ impl Solution {
         }
 
         for (i, c) in s.chars().enumerate() {
-            if !result.contains(c) {
-                while let Some(top) = result.chars().nth(result.len() - 1) {
-                    if c < top && i < *last_occ.get(&top).unwrap() {
-                        result.remove(result.len() - 1);
-                    } else {
-                        break;
-                    }
-                }
-
-                result.push(c);
+            if result.contains(c) {
+                continue;
             }
+            
+            while let Some(top) = result.chars().nth(result.len() - 1) {
+                if c < top && i < *last_occ.get(&top).unwrap() {
+                    result.remove(result.len() - 1);
+                } else {
+                    break;
+                }
+            }
+
+            result.push(c);
         }
 
         result
