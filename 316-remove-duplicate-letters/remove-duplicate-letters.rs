@@ -1,9 +1,8 @@
-use std::collections::{HashSet, HashMap};
+use std::collections::{HashMap};
 
 impl Solution {
     pub fn remove_duplicate_letters(s: String) -> String {
-        let mut stack: Vec<char> = Vec::new();
-        let mut seen: HashSet<char> = HashSet::new();
+        let mut result: String = String::new();
         let mut last_occ: HashMap<char, usize> = HashMap::new();
 
         for (i, c) in s.chars().enumerate() {
@@ -11,20 +10,19 @@ impl Solution {
         }
 
         for (i, c) in s.chars().enumerate() {
-            if !seen.contains(&c) {
-                while let Some(&top) = stack.last() {
+            if !result.contains(c) {
+                while let Some(top) = result.chars().nth(result.len() - 1) {
                     if c < top && i < *last_occ.get(&top).unwrap() {
-                        seen.remove(&stack.pop().unwrap());
+                        result.remove(result.len() - 1);
                     } else {
                         break;
                     }
                 }
 
-                seen.insert(c);
-                stack.push(c);
+                result.push(c);
             }
         }
 
-        stack.into_iter().collect()
+        result
     }
 }
